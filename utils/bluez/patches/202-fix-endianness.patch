@@ -1,0 +1,12 @@
+Index: bluez-5.53/src/shared/util.h
+===================================================================
+--- bluez-5.53.orig/src/shared/util.h
++++ bluez-5.53/src/shared/util.h
+@@ -26,6 +26,7 @@
+ #include <alloca.h>
+ #include <byteswap.h>
+ #include <string.h>
++#include <endian.h>
+ 
+ #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+ 
