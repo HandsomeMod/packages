@@ -16,7 +16,7 @@ PKG_VERSION:=$(PYTHON3_VERSION).$(PYTHON3_VERSION_MICRO)
 
 PKG_SOURCE:=Python-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://www.python.org/ftp/python/$(PKG_VERSION)
-PKG_HASH:=991c3f8ac97992f3d308fefeb03a64db462574eadbff34ce8bc5bb583d9903ff
+PKG_HASH:=3c2034c54f811448f516668dce09d24008a0716c3a794dd8639b5388cbde247d
 
 PKG_MAINTAINER:=Alexandru Ardelean <ardeleanalex@gmail.com>, Jeffery To <jeffery.to@gmail.com>
 PKG_LICENSE:=Python/2.0
@@ -299,6 +299,8 @@ endif
 ifeq ($(HOST_OS),Darwin)
 HOST_CONFIGURE_VARS += \
 	ac_cv_header_libintl_h=no
+HOST_MAKE_VARS += \
+	USE_PYTHON_CONFIG_PY=1
 endif
 
 HOST_CONFIGURE_ARGS+= \
@@ -315,8 +317,8 @@ define Host/Configure
 endef
 
 define Host/Compile
-	+$(HOST_MAKE_VARS) $(MAKE) $(HOST_JOBS) -C $(HOST_BUILD_DIR) python
-	+$(HOST_MAKE_VARS) $(MAKE) $(HOST_JOBS) -C $(HOST_BUILD_DIR) sharedmods
+	$(call Host/Compile/Default,python)
+	$(call Host/Compile/Default,sharedmods)
 endef
 
 define Host/Install
@@ -336,7 +338,7 @@ define Host/Install
 			$(HOST_PYTHON3_PKG_DIR)/.pip-patched* \
 			$(HOST_PYTHON3_PKG_DIR)/.pip_installed_*
 	)
-	$(MAKE) -C $(HOST_BUILD_DIR) install
+	$(call Host/Install/Default)
 	$(if $(wildcard $(HOST_PYTHON3_PKG_DIR)/.setuptools_installed_$(PYTHON3_SETUPTOOLS_VERSION)-$(PYTHON3_SETUPTOOLS_PKG_RELEASE)),,
 		$(call HostPatchDir,$(HOST_PYTHON3_PKG_DIR),./patches-setuptools,)
 		touch $(HOST_PYTHON3_PKG_DIR)/.setuptools_installed_$(PYTHON3_SETUPTOOLS_VERSION)-$(PYTHON3_SETUPTOOLS_PKG_RELEASE)

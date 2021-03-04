@@ -99,7 +99,7 @@ GST_VERSION:=1.0
 
 MESON_ARGS += \
 	$(call GST_COND_SELECT,accurip) \
-	$(call GST_COND_SELECT,adpcmdec) \
+#	$(call GST_COND_SELECT,adpcmdec) \
 	$(call GST_COND_SELECT,adpcmenc) \
 	$(call GST_COND_SELECT,aiff) \
 	$(call GST_COND_SELECT,asfmux) \
@@ -190,6 +190,7 @@ MESON_ARGS += \
 	-Dfaac=disabled \
 	$(call GST_COND_SELECT,faad) \
 	-Dfbdev=$(if $(CONFIG_PACKAGE_gst1-mod-fbdevsink),en,dis)abled \
+	-Daudiofxbad=$(if $(CONFIG_PACKAGE_gst1-mod-audiofxbad),en,dis)abled \
 	-Dflite=disabled \
 	-Dfluidsynth=disabled \
 	-Dgl=disabled \
@@ -198,7 +199,6 @@ MESON_ARGS += \
 	-Dipcpipeline=disabled \
 	-Diqa=disabled \
 	-Dkate=disabled \
-	-Dkms=disabled \
 	-Dladspa=disabled \
 	-Dlibde265=disabled \
 	-Dlibmms=disabled \
@@ -220,7 +220,7 @@ MESON_ARGS += \
 	-Dopenni2=disabled \
 	-Dopensles=disabled \
 	-Dopus=$(if $(CONFIG_PACKAGE_gst1-mod-opusparse),en,dis)abled \
-	-Dkms=$(if $(CONFIG_PACKAGE_gst1-mod-kmssink),en,dis)abled \
+	-Dkms=$(if $(CONFIG_PACKAGE_gst1-mod-kms),en,dis)abled \
 	-Dfdkaac=$(if $(CONFIG_PACKAGE_gst1-mod-fdkaac),en,dis)abled \
 	-Dresindvd=disabled \
 	-Drsvg=disabled \
@@ -255,7 +255,6 @@ MESON_ARGS += \
 	-Dwpe=disabled \
 	-Dmagicleap=disabled \
 	-Dv4l2codecs=disabled \
-	\
 	$(call GST_COND_SELECT,hls) \
 	-Dhls-crypto=nettle \
 	-Dexamples=disabled \
@@ -353,7 +352,7 @@ define GstBuildPlugin
   $$(eval $$(call BuildPackage,gst1-mod-$(1)))
 endef
 
-$(eval $(call GstBuildPlugin,adpcmdec,adpcm decoding support,audio,,))
+#$(eval $(call GstBuildPlugin,adpcmdec,adpcm decoding support,audio,,))
 $(eval $(call GstBuildPlugin,adpcmenc,adpcm encoding support,audio,,))
 $(eval $(call GstBuildPlugin,aiff,aiff support,audio tag,,))
 $(eval $(call GstBuildPlugin,asfmux,asf muxing support,rtp,,))
@@ -409,18 +408,18 @@ $(eval $(call GstBuildPlugin,switchbin,switchbin support,,,))
 $(eval $(call GstBuildPlugin,timecode,timecode support,,,))
 $(eval $(call GstBuildPlugin,videofiltersbad,videofiltersbad support,,,))
 $(eval $(call GstBuildPlugin,videoframe_audiolevel,videoframe_audiolevel support,,,))
-$(eval $(call GstBuildPlugin,videoparsersbad,videoparsersbad support,,,))
+$(eval $(call GstBuildPlugin,videoparsersbad,videoparsersbad support,codecparsers,,))
 $(eval $(call GstBuildPlugin,videosignal,videosignal support,,,))
 $(eval $(call GstBuildPlugin,vmnc,vmnc support,,,))
 $(eval $(call GstBuildPlugin,y4mdec,y4mdec support,,,))
 $(eval $(call GstBuildPlugin,fdkaac,Fraunhofer FDK AAC encoding library,,,+fdk-aac))
 $(eval $(call GstBuildPlugin,bluez,bluez support,,,+bluez-libs))
 $(eval $(call GstBuildPlugin,bz2,bzip2 support,,,+libbz2))
-$(eval $(call GstBuildPlugin,dataurisrc,dataurisrc support,,,))
+#$(eval $(call GstBuildPlugin,dataurisrc,dataurisrc support,,,))
 $(eval $(call GstBuildPlugin,dtls,DTLS support,,,+libopenssl))
 $(eval $(call GstBuildPlugin,faad,faad support,audio,,+libfaad2))
 $(eval $(call GstBuildPlugin,fbdevsink,fbdev support,video,,))
-$(eval $(call GstBuildPlugin,kmssink,DRM support,video,,+libdrm))
+$(eval $(call GstBuildPlugin,kms,DRM support,video,,+libdrm))
 $(eval $(call GstBuildPlugin,hls,HLS support,pbutils adaptivedemux,multifile,+libnettle))
 $(eval $(call GstBuildPlugin,opusparse,OPUS streams library,pbutils,,+libopus))
 $(eval $(call GstBuildPlugin,sbc,sbc support,audio,,+sbc))
