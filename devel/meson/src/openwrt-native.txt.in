@@ -2,7 +2,6 @@
 c = [@CC@]
 cpp = [@CXX@]
 pkgconfig = '@PKGCONFIG@'
-@EXTRA_BIN@
 
 [built-in options]
 c_args = [@CFLAGS@]

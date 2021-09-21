@@ -5,7 +5,6 @@ ar = '@AR@'
 strip = '@STRIP@'
 nm = '@NM@'
 pkgconfig = '@PKGCONFIG@'
-@EXTRA_BIN@
 
 [built-in options]
 c_args = [@CFLAGS@]
