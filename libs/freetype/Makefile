@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2006-2015 OpenWrt.org
+# Copyright (C) 2020-2021 HandsomeMod Project
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -24,6 +25,7 @@ CMAKE_INSTALL:=1
 PKG_BUILD_PARALLEL:=1
 CMAKE_BINARY_SUBDIR:=build
 
+include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
@@ -51,9 +53,19 @@ CMAKE_OPTIONS += \
 	-DFT_WITH_HARFBUZZ=OFF \
 	-DFT_WITH_BROTLI=OFF
 
+CMAKE_HOST_OPTIONS += \
+	-DBUILD_SHARED_LIBS=ON \
+	-DCMAKE_DISABLE_FIND_PACKAGE_BZip2=ON \
+	-DFT_WITH_ZLIB=OFF \
+	-DFT_WITH_BZIP2=OFF \
+	-DFT_WITH_PNG=OFF \
+	-DFT_WITH_HARFBUZZ=OFF \
+	-DFT_WITH_BROTLI=OFF
+
 define Package/libfreetype/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libfreetype.so.* $(1)/usr/lib/
 endef
 
+$(eval $(call HostBuild))
 $(eval $(call BuildPackage,libfreetype))
