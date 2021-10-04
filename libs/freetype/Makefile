@@ -55,8 +55,7 @@ MESON_HOST_ARGS += \
 	-Dbzip2=disabled \
 	-Dpng=disabled \
 	-Dharfbuzz=disabled \
-	-Dbrotli=disabled \
-	-Dmmap=enabled
+	-Dbrotli=disabled
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/freetype2
