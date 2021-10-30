@@ -24,7 +24,7 @@ define Package/opencv-python
   SUBMENU:=Python
   TITLE:=Pre-built CPU-only OpenCV packages for Python.
   URL:=https://github.com/opencv/opencv-python
-  DEPENDS:= +python3-light +python3-numpy
+  DEPENDS:= +python3-light +python3-numpy @BROKEN
 endef
 
 define Package/opencv-python/description
