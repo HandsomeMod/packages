@@ -54,6 +54,7 @@ CONFIGURE_ARGS += \
 	--without-polkit \
 	--without-udev \
 	--without-systemdsystemunitdir \
+	--enable-plugin-qcom-soc \
 	--disable-rpath \
 	--disable-gtk-doc
 
