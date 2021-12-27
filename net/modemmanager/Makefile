@@ -1,6 +1,7 @@
 #
 # Copyright (C) 2016 Velocloud Inc.
 # Copyright (C) 2016 Aleksander Morgado <aleksander@aleksander.es>
+# Copyright (C) 2020-2021 HandsomeMod Project
 #
 # This is free software, licensed under the GNU General Public License v2.
 #
@@ -41,7 +42,8 @@ define Package/modemmanager
 	+dbus \
 	+ppp \
 	+MODEMMANAGER_WITH_MBIM:libmbim \
-	+MODEMMANAGER_WITH_QMI:libqmi
+	+MODEMMANAGER_WITH_QMI:libqmi \
+	+MODEMMANAGER_WITH_UDEV:libgudev
 endef
 
 define Package/modemmanager/description
@@ -52,7 +54,6 @@ endef
 
 CONFIGURE_ARGS += \
 	--without-polkit \
-	--without-udev \
 	--without-systemdsystemunitdir \
 	--enable-plugin-qcom-soc \
 	--disable-rpath \
@@ -66,6 +67,12 @@ ifdef CONFIG_MODEMMANAGER_WITH_MBIM
   CONFIGURE_ARGS += --with-mbim
 else
   CONFIGURE_ARGS += --without-mbim
+endif
+
+ifdef CONFIG_MODEMMANAGER_WITH_UDEV
+  CONFIGURE_ARGS += --with-udev
+else
+  CONFIGURE_ARGS += --without-udev
 endif
 
 ifdef CONFIG_MODEMMANAGER_WITH_QMI

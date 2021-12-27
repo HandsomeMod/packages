@@ -7,6 +7,12 @@ depends on PACKAGE_modemmanager
 		help
 		  Compile ModemManager with MBIM support
 
+	config MODEMMANAGER_WITH_UDEV
+		bool "Include UDEV support"
+		default n
+		help
+		  Compile ModemManager with UDEV support
+
 	config MODEMMANAGER_WITH_QMI
 		bool "Include QMI support"
 		default y
