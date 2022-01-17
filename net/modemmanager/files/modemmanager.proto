@@ -368,13 +368,8 @@ proto_modemmanager_setup() {
 		proto_set_available "${interface}" 0
 		return 1
 	}
-	[ -e "${device}" ] || {
-		echo "Device not found in sysfs"
-		proto_set_available "${interface}" 0
-		return 1
-	}
 
-	# validate that ModemManager is handling the modem at the sysfs path
+	# validate that ModemManager is handling the modem at the sysfs path or uid
 	modemstatus=$(mmcli --modem="${device}" --output-keyvalue)
 	modempath=$(modemmanager_get_field "${modemstatus}" "modem.dbus-path")
 	[ -n "${modempath}" ] || {
