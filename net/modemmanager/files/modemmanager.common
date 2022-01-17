@@ -48,6 +48,13 @@ mm_find_physdev_sysfs_path() {
 			return
 		}
 
+		# For Qcom Q6v5, the physical device will be that with a file called name
+		[ -f "${tmp_path}"/name ] && {
+			tmp_path=$(readlink -f "$tmp_path")
+			echo "${tmp_path}"
+			return
+		}
+
 		# For PCI devices, the physical device will be that with a vendor
 		# and device pair of files
 		[ -f "${tmp_path}"/vendor ] && [ -f "${tmp_path}"/device ] && {
