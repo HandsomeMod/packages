@@ -1,0 +1,46 @@
+From c8f2feda750898aa3723f1dbaec42158453e36f4 Mon Sep 17 00:00:00 2001
+From: HandsomeYingyan <handsomeyingyan@gmail.com>
+Date: Mon, 17 Jan 2022 15:31:29 +0800
+Subject: [PATCH] make qcom-soc work without udev
+
+---
+ plugins/qcom-soc/77-mm-qcom-soc.rules | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/plugins/qcom-soc/77-mm-qcom-soc.rules b/plugins/qcom-soc/77-mm-qcom-soc.rules
+index 32195c1..9dcc5e5 100644
+--- a/plugins/qcom-soc/77-mm-qcom-soc.rules
++++ b/plugins/qcom-soc/77-mm-qcom-soc.rules
+@@ -21,14 +21,25 @@ LABEL="mm_qcom_soc_process"
+ ENV{ID_MM_PHYSDEV_UID}="qcom-soc"
+ 
+ # port type hints for the rpmsgexport-ed ports
+-SUBSYSTEM=="rpmsg", ATTR{name}=="DATA[0-9]*_CNTL", ENV{ID_MM_PORT_TYPE_QMI}="1"
+-SUBSYSTEM=="rpmsg", ATTR{name}=="DATA[0-9]",       ENV{ID_MM_PORT_TYPE_AT_SECONDARY}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA5_CNTL",  ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA6_CNTL",  ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA7_CNTL",  ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA8_CNTL",  ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA9_CNTL",  ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA12_CNTL", ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA13_CNTL", ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA14_CNTL", ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA15_CNTL", ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA16_CNTL", ENV{ID_MM_PORT_TYPE_QMI}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA1",       ENV{ID_MM_PORT_TYPE_AT_SECONDARY}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA2",       ENV{ID_MM_PORT_TYPE_AT_SECONDARY}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA3",       ENV{ID_MM_PORT_TYPE_AT_SECONDARY}="1"
++SUBSYSTEM=="rpmsg", ATTR{name}=="DATA4",       ENV{ID_MM_PORT_TYPE_AT_SECONDARY}="1"
+ 
+ # ignore every other port without explicit hints
+ SUBSYSTEM=="rpmsg", ENV{ID_MM_PORT_TYPE_QMI}!="1", ENV{ID_MM_PORT_TYPE_AT_SECONDARY}!="1", ENV{ID_MM_PORT_IGNORE}="1"
+ 
+-# explicitly ignore ports intended for USB tethering (DATA40, DATA40_CNTL)
+-SUBSYSTEM=="rpmsg", ATTR{name}=="DATA40*", ENV{ID_MM_PORT_IGNORE}="1"
++# explicitly ignore bam-dmux network ports like rmnet_usb0
+ KERNEL=="rmnet_usb[0-9]*", ENV{ID_MM_PORT_IGNORE}="1"
+ 
+ # flag all rpmsg ports under this plugin as candidate
+-- 
+2.34.1
+
